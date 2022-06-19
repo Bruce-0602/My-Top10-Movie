@@ -5,11 +5,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
 import requests
+import os
 
 MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DB_INFO_URL = "https://api.themoviedb.org/3/movie"
 MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-MOVIE_DB_API_KEY = "d5713636726d26ba02749e2e3a819cb0"
+MOVIE_DB_API_KEY = os.environ["MOVIE_API_KEY"]
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -131,7 +132,7 @@ def find_movie():
         )
         db.session.add(new_movie)
         db.session.commit()
-        return redirect(url_for("rate_movie", new_movie.id))
+        return redirect(url_for("rate_movie", id=new_movie.id))
 
 
 if __name__ == '__main__':
